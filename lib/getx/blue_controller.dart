@@ -9,6 +9,7 @@ class BlueController extends GetxController {
   FlutterBlue flutterBlue = FlutterBlue.instance;
 
   Future scanDevices() async {
+    
     var blePermission = await Permission.bluetoothScan.status;
 
     if (blePermission.isDenied) {

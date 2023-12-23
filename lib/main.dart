@@ -1,4 +1,6 @@
+import 'package:blue_test/presentation/chart_view/page/chart_view.dart';
 import 'package:blue_test/getx/blue_controller.dart';
+import 'package:blue_test/getx/csv_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
@@ -33,20 +35,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  CSVController csvController = Get.put(CSVController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BlueController>(
         init: BlueController(),
-      
+        initState: (v) {},
         builder: (controller) {
+          csvController.loadCsvData();
           return Scaffold(
             appBar: AppBar(
               title: const Text("bluetooth low energy scanner"),
               centerTitle: true,
             ),
-            floatingActionButton: FloatingActionButton(
-                onPressed: () => controller.scanDevices(),
-                child: const Icon(Icons.search)),
+            floatingActionButton: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                    onPressed: () => controller.scanDevices(),
+                    child: const Icon(Icons.search)),
+                  const  SizedBox(width: 50),
+                FloatingActionButton(
+                  heroTag: "navigate",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChartView()),
+                      );
+                    },
+                    child: const Text(".CSV")),
+              ],
+            ),
             body: Center(
               child: StreamBuilder<List<ScanResult>>(
                   stream: controller.scanResults,
