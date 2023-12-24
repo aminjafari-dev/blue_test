@@ -1,5 +1,5 @@
-import 'package:blue_test/getx/csv_controller.dart';
-import 'package:blue_test/presentation/chart_view/widget/chart_builder.dart';
+import 'package:blue_test/features/csv_file/presentation/getx/csv_controller.dart';
+import 'package:blue_test/features/csv_file/presentation/widgets/chart_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -31,7 +31,7 @@ class _ChartViewState extends State<ChartView> {
                   ),
                   ChartBuilder(
                     spots: [
-                      for (int i = 0; i < controller.timeValues.length; i++)
+                      for (int i = 0; i < controller.timeValues.length ; i++)
                         FlSpot(controller.timeValues[i].toDouble(),
                             controller.irValues[i].toDouble())
                     ],

@@ -11,9 +11,12 @@ class ChartBuilder extends StatelessWidget {
       child: LineChart(
         LineChartData(
           lineBarsData: [
-            LineChartBarData(spots: spots
-                // isCurved: true,
-                ),
+            LineChartBarData(
+              spots:  spots..sort((a, b) => a.x.compareTo(b.x)),
+              
+              dotData: const FlDotData(show: false),
+              isCurved: false
+            ),
           ],
         ),
       ),

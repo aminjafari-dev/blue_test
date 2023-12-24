@@ -1,6 +1,7 @@
-import 'package:blue_test/presentation/chart_view/page/chart_view.dart';
-import 'package:blue_test/getx/blue_controller.dart';
-import 'package:blue_test/getx/csv_controller.dart';
+import 'package:blue_test/features/bluetooth_devices/presentation/pages/devices_list.dart';
+import 'package:blue_test/features/csv_file/presentation/pages/chart_view.dart';
+import 'package:blue_test/features/bluetooth_devices/presentation/getx/blue_controller.dart';
+import 'package:blue_test/features/csv_file/presentation/getx/csv_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
@@ -22,79 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: DevicesList(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  CSVController csvController = Get.put(CSVController());
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<BlueController>(
-        init: BlueController(),
-        initState: (v) {},
-        builder: (controller) {
-          csvController.loadCsvData();
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("bluetooth low energy scanner"),
-              centerTitle: true,
-            ),
-            floatingActionButton: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton(
-                    onPressed: () => controller.scanDevices(),
-                    child: const Icon(Icons.search)),
-                  const  SizedBox(width: 50),
-                FloatingActionButton(
-                  heroTag: "navigate",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ChartView()),
-                      );
-                    },
-                    child: const Text(".CSV")),
-              ],
-            ),
-            body: Center(
-              child: StreamBuilder<List<ScanResult>>(
-                  stream: controller.scanResults,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          padding: const EdgeInsets.all(20),
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            final data = snapshot.data![index];
-                            return Card(
-                              elevation: 2,
-                              child: ListTile(
-                                title: Text(data.device.name),
-                                subtitle: Text(data.device.id.id),
-                                trailing: Text(
-                                  data.rssi.toString(),
-                                ),
-                              ),
-                            );
-                          });
-                    } else {
-                      return const Center(
-                        child: Text("No Device Found"),
-                      );
-                    }
-                  }),
-            ),
-          );
-        });
   }
 }
