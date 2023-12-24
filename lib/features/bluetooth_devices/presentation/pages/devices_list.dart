@@ -28,11 +28,8 @@ class DevicesList extends StatelessWidget {
                 StreamBuilder<bool>(
                     stream: controller.flutterBlue.isScanning,
                     builder: (context, snapshot) {
-                      print(snapshot.data);
                       return FloatingActionButton(
                         onPressed: () {
-                          print(snapshot.data != null);
-                          print(snapshot.data);
                           if (snapshot.data != null && !snapshot.data!) {
                             controller.scanDevices();
                           }
@@ -48,7 +45,7 @@ class DevicesList extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ChartView()),
+                      MaterialPageRoute(builder: (context) =>const ChartView()),
                     );
                   },
                   child: const Text(".CSV"),
@@ -58,7 +55,6 @@ class DevicesList extends StatelessWidget {
             body: StreamBuilder<List<ScanResult>>(
                 stream: controller.flutterBlue.scanResults,
                 builder: (context, snapshot) {
-                  print(snapshot.data);
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return Column(
                       children: [
@@ -66,7 +62,7 @@ class DevicesList extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Row(
                             children: [
-                              Text("Bluetooth is:  "),
+                             const Text("Bluetooth is:  "),
                               Text(controller.bluetoothOn ? "On" : "Off"),
                             ],
                           ),

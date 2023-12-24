@@ -5,7 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class ChartView extends StatefulWidget {
-  ChartView({super.key});
+ const ChartView({super.key});
 
   @override
   State<ChartView> createState() => _ChartViewState();
